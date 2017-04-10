@@ -1,17 +1,17 @@
 public class SchrodingerCard {
-    private CardDeck deck;
-    private double[] probabilityModel;
+    public boolean[] possibilityModel;
+    public double[] probabilityModel;
     private boolean locked;
 
-    public SchrodingerCard(CardDeck deck){
-        this.deck = deck;
+    public SchrodingerCard(){
+        possibilityModel = new boolean[52];
         probabilityModel = new double[52];
         for (int i = 0; i < probabilityModel.length; i++){
-            probabilityModel[i] = 1.0/52.0;
+            possibilityModel[i] = true;
         }
     }
 
-    public String cardToString(int cardIndex){
+    public static String cardToString(int cardIndex){
         int suit = cardIndex / 13;
         int value = cardIndex % 13;
         String card;
