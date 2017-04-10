@@ -70,7 +70,7 @@ public class CardDeck {
                 false, false, false, false, false, false, false, false, false, false, false, true, false};
         cd.cards[4].possibilityModel = new boolean[]{
                 false, false, false, false, false, false, false, false, false, false, false, false, true,
-                false, false, false, false, false, false, false, false, false, false, false, true, true,
+                false, false, false, false, false, false, false, false, false, false, false, false, true,
                 false, false, false, false, false, false, false, false, false, false, false, false, false,
                 false, false, false, false, false, false, false, false, false, false, false, false, false};
         cd.buildProbabilityModel();
