@@ -6,7 +6,7 @@ import java.util.Map;
  */
 public class ProbabilityModel {
     public Map<Integer,OptionVector> unknownCards;
-    public Map<Integer,Card> revealedCards;
+    public Map<Integer,Integer> revealedCards;
     public long duration;
 
     public ProbabilityModel(){
@@ -17,12 +17,11 @@ public class ProbabilityModel {
         }
     }
 
-    public void revealCard(int index, Card card){
-        int cardID = card.ordinal();
+    public void revealCard(int index, int card){
         revealedCards.put(index, card);
         unknownCards.remove(index);
         for (int k: unknownCards.keySet()){
-            unknownCards.get(k).removeOption(cardID);
+            unknownCards.get(k).removeOption(card);
         }
     }
 
@@ -30,12 +29,24 @@ public class ProbabilityModel {
         for (int i = 0; i < 52; i++){
             int finalI = i;
             double sum = unknownCards.entrySet().stream().mapToDouble(e -> e.getValue().probabilities[finalI]).sum();
-            unknownCards.forEach((k,v) -> v.adjustProbability(finalI, 1/sum));
+            if (sum != 0) unknownCards.forEach((k,v) -> v.adjustProbability(finalI, 1/sum));
         }
+    }
+
+    public double[] getAggregateModel(int[] cardIndexes){
+        double[] sum = new double[52];
+        for (int ci: cardIndexes){
+            double[] probabilities = unknownCards.get(ci).probabilities;
+            for (int i = 0; i < 52; i++){
+                sum[i] += probabilities[i];
+            }
+        }
+        return sum;
     }
 
     public void buildProbabilityModel(){
         unknownCards.forEach((k,v) -> v.loadProbabilities());
+
         long startTime = System.nanoTime();
         for (int i = 0; i < 10000; i++){
             equalizeCardProbabilities();
