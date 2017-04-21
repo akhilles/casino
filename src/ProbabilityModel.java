@@ -36,6 +36,7 @@ public class ProbabilityModel {
     public double[] getAggregateModel(int[] cardIndexes){
         double[] sum = new double[52];
         for (int ci: cardIndexes){
+            if (ci < 0) continue;
             double[] probabilities = unknownCards.get(ci).probabilities;
             for (int i = 0; i < 52; i++){
                 sum[i] += probabilities[i];

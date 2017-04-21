@@ -3,8 +3,8 @@
  */
 public class CardUtilities {
     public static String cardToString(int cardIndex){
-        int suit = cardIndex / 4;
-        int value = cardIndex % 4;
+        int suit = cardIndex / 13;
+        int value = cardIndex % 13;
         String card;
         switch (value){
             case 8:  card = "10-"; break;
